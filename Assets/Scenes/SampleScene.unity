@@ -522,6 +522,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumRays: 3
   RayMargin: 0.001
+  CollisionTags:
+  - Wall
 --- !u!1 &1366912085
 GameObject:
   m_ObjectHideFlags: 0

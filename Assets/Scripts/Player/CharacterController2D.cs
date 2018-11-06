@@ -8,19 +8,23 @@ public class CharacterController2D : MonoBehaviour
 	// Collision Settings
 	public int NumRays = 3;
 	public float RayMargin = 0.001f;
+	public string[] CollisionTags;
 
 	// Components
 	private Transform trans;
 	private Collider2D col;
 
-	private ArrayList CollisionTags = new ArrayList();
+	private ArrayList collisionTags = new ArrayList();
 
 	void Awake()
 	{
 		trans = GetComponent<Transform>();
 		col = GetComponent<Collider2D>();
 
-		CollisionTags.Add("Wall");
+		foreach (string tag in CollisionTags)
+		{
+			collisionTags.Add(tag);
+		}
 	}
 
 	public void Move(Vector2 movement)
@@ -49,7 +53,7 @@ public class CharacterController2D : MonoBehaviour
 				Debug.DrawRay(origin, Vector2.right * dir, Color.red);
 				Debug.DrawRay(origin, Vector2.right * movement.x, Color.blue);
 
-				if (hitInfo.collider != null && CollisionTags.Contains(hitInfo.collider.tag))
+				if (hitInfo.collider != null && collisionTags.Contains(hitInfo.collider.tag))
 				{
 					if (hitInfo.distance < closestHit.distance)
 					{
@@ -97,7 +101,7 @@ public class CharacterController2D : MonoBehaviour
 				Debug.DrawRay(origin, Vector2.up * dir, Color.red);
 				Debug.DrawRay(origin, Vector2.up * movement.y, Color.blue);
 
-				if (hitInfo.collider != null && CollisionTags.Contains(hitInfo.collider.tag))
+				if (hitInfo.collider != null && collisionTags.Contains(hitInfo.collider.tag))
 				{
 					if (hitInfo.distance < closestHit.distance)
 					{
