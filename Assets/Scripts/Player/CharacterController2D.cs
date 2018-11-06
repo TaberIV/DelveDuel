@@ -6,7 +6,8 @@ using UnityEngine;
 public class CharacterController2D : MonoBehaviour
 {
 	// Collision Settings
-	public int NumRays = 3;
+	public int NumRaysX = 3;
+	public int NumRaysY = 3;
 	public float RayMargin = 0.001f;
 	public string[] CollisionTags;
 
@@ -43,11 +44,11 @@ public class CharacterController2D : MonoBehaviour
 
 			// Raycasting
 			bool collided = false;
-			float raySpacing = col.bounds.size.y / (NumRays - 1);
+			float raySpacing = col.bounds.size.y / (NumRaysX - 1);
 			RaycastHit2D closestHit = new RaycastHit2D();
 			closestHit.distance = Mathf.Infinity;
 
-			for (int i = 0; i < NumRays; i++)
+			for (int i = 0; i < NumRaysX; i++)
 			{
 				RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.right * dir, Mathf.Abs(movement.x));
 				Debug.DrawRay(origin, Vector2.right * dir, Color.red);
@@ -91,11 +92,11 @@ public class CharacterController2D : MonoBehaviour
 
 			// Raycasting
 			bool collided = false;
-			float raySpacing = col.bounds.size.x / (NumRays - 1);
+			float raySpacing = col.bounds.size.x / (NumRaysY - 1);
 			RaycastHit2D closestHit = new RaycastHit2D();
 			closestHit.distance = Mathf.Infinity;
 
-			for (int i = 0; i < NumRays; i++)
+			for (int i = 0; i < NumRaysY; i++)
 			{
 				RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.up * dir, Mathf.Abs(movement.y));
 				Debug.DrawRay(origin, Vector2.up * dir, Color.red);

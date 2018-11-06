@@ -10,16 +10,18 @@ public class PlayerMovement : MonoBehaviour
     public float MoveForce = 30f;
     public float Friction = 50f;
 
-    //Bullet Settings
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-
     // Components
     private CharacterController2D controller;
 
     // State
     private Vector2 moveInput;
     private Vector2 velocity;
+
+    // Accessors
+    public Vector2 Velocity
+    {
+        get { return velocity; }
+    }
 
     void Awake()
     {
@@ -36,8 +38,6 @@ public class PlayerMovement : MonoBehaviour
         GetInput();
 
         Movement();
-
-        Shooting();
     }
 
     private void GetInput()
@@ -115,23 +115,6 @@ public class PlayerMovement : MonoBehaviour
         if (velocity.magnitude > MoveSpeed)
         {
             velocity = velocity.normalized * MoveSpeed;
-        }
-    }
-
-    private void Shooting()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            var bullet = (GameObject) Instantiate(
-                bulletPrefab,
-                bulletSpawn.position,
-                bulletSpawn.rotation);
-
-            // Add velocity to the bullet
-            bullet.GetComponent<Movement>().SetVel(new Vector2(velocity.x * 2, velocity.y * 2));
-
-            // Destroy the bullet after 2 seconds
-            Destroy(bullet, .5f);
         }
     }
 }
