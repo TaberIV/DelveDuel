@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0b1bca1e13d0847900e42d7713d21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
+  MoveSpeed: 20
   LiveTime: 1
 --- !u!114 &114714610118942058
 MonoBehaviour:
@@ -138,4 +138,5 @@ MonoBehaviour:
   NumRaysX: 3
   NumRaysY: 3
   RayMargin: 0.001
-  CollisionTags: []
+  CollisionTags:
+  - Wall

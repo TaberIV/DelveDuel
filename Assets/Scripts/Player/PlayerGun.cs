@@ -26,20 +26,38 @@ public class PlayerGun : MonoBehaviour
 
 	void Update()
 	{
-		aim = new Vector2(
-			Input.GetAxis("AimHorizontal"),
-			Input.GetAxis("AimVertical")
-		);
-
-		if (aim.magnitude != 0)
-		{
-			aim.Normalize();
-			Rotate(aim);
-		}
+		GetInput();
+		Rotate(aim);
 
 		if (Input.GetButton("Fire"))
 		{
 			Fire();
+		}
+	}
+
+	private void GetInput()
+	{
+		Vector2 aimInput = new Vector2(
+			Input.GetAxis("AimHorizontal"),
+			Input.GetAxis("AimVertical")
+		);
+
+		if (aimInput.magnitude != 0)
+		{
+			aim = aimInput.normalized;
+		}
+		// Intended for aiming at mouse
+		else
+		{
+			Vector2 mouseInput = new Vector2(
+				Input.GetAxis("Mouse X"),
+				Input.GetAxis("Mouse Y")
+			);
+
+			if (mouseInput.magnitude != 0)
+			{
+				// TODO Aim at mouse
+			}
 		}
 	}
 
