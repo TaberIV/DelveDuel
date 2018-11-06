@@ -2,18 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class PlayerMovement : MonoBehaviour
-{
-    // Inspector Settings
-    // Movement Settings
-    public float MoveSpeed = 5f;
-    public float MoveForce = 10f;
-    public float Friction = 20f;
-
-    //Bullet Settings
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
+public class Movement : MonoBehaviour {
 
     // Collision Settings
     public int NumRays = 3;
@@ -24,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D col;
 
     // State
-    private Vector2 moveInput;
     private Vector2 velocity;
     private ArrayList CollisionTags = new ArrayList();
 
@@ -135,48 +123,24 @@ public class PlayerMovement : MonoBehaviour
 
         // Initialize State
         velocity = new Vector2(0, 0);
-        moveInput = new Vector2(0, 0);
 
         CollisionTags.Add("Wall");
     }
 
     void Update()
     {
-        GetInput();
-
-        Movement();
-
-        Shooting();
+        BulletMovement();
     }
 
-    private void GetInput()
-    { 
-        moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    }
-
-    private void Movement()
+    private void BulletMovement()
     {
-        velocity = moveInput * MoveSpeed;
-
         Vector2 movement = velocity * Time.deltaTime;
 
         Move(movement);
     }
 
-    private void Shooting()
+    public void SetVel(Vector2 vel)
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            var bullet = (GameObject)Instantiate(
-            bulletPrefab,
-            bulletSpawn.position,
-            bulletSpawn.rotation);
-
-            // Add velocity to the bullet
-            bullet.GetComponent<Movement>().SetVel(new Vector2(velocity.x * 2, velocity.y * 2));
-
-            // Destroy the bullet after 2 seconds
-            Destroy(bullet, .5f);
-        }
+        velocity = vel;
     }
 }
