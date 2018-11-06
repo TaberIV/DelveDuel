@@ -21,13 +21,14 @@ public class PlayerGun : MonoBehaviour
 		trans = GetComponent<Transform>();
 
 		// Initialize State
-		Rotate(Vector2.right);
+		aim = Vector2.right;
+		Rotate();
 	}
 
 	void Update()
 	{
 		GetInput();
-		Rotate(aim);
+		Rotate();
 
 		if (Input.GetButton("Fire"))
 		{
@@ -61,7 +62,7 @@ public class PlayerGun : MonoBehaviour
 		}
 	}
 
-	private void Rotate(Vector2 aim)
+	private void Rotate()
 	{
 		trans.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(aim.y, aim.x));
 		trans.localPosition = aim * Radius;

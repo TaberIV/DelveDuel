@@ -30,6 +30,11 @@ public class BulletMovement : MonoBehaviour
 
     void Update()
     {
-        controller.Move(velocity * Time.deltaTime);
+        RaycastHit2D hitInfo = controller.Move(velocity * Time.deltaTime);
+
+        if (hitInfo.collider != null)
+        {
+            Destroy(gameObject);
+        }
     }
 }

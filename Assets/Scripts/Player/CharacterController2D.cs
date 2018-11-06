@@ -28,9 +28,18 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
-	public void Move(Vector2 movement)
+	public RaycastHit2D Move(Vector2 movement)
 	{
-		// Horizontal Movement
+		RaycastHit2D hit1 = HorizontalMovement(movement);
+		RaycastHit2D hit2 = VerticalMovement(movement);
+
+		return hit1.collider == null || hit2.distance < hit1.distance ?
+			hit2 :
+			hit1;
+	}
+
+	private RaycastHit2D HorizontalMovement(Vector2 movement)
+	{
 		if (movement.x != 0)
 		{
 			float dir = Mathf.Sign(movement.x);
@@ -76,9 +85,17 @@ public class CharacterController2D : MonoBehaviour
 				float newX = closestHit.point.x - dir * (col.bounds.extents.x + RayMargin);
 				trans.position = new Vector3(newX, trans.position.y);
 			}
-		}
 
-		// Vertical Movement
+			return closestHit;
+		}
+		else
+		{
+			return new RaycastHit2D();
+		}
+	}
+
+	private RaycastHit2D VerticalMovement(Vector2 movement)
+	{
 		if (movement.y != 0)
 		{
 			float dir = Mathf.Sign(movement.y);
@@ -124,6 +141,12 @@ public class CharacterController2D : MonoBehaviour
 				float newY = closestHit.point.y - dir * (col.bounds.extents.y + RayMargin);
 				trans.position = new Vector3(trans.position.x, newY);
 			}
+
+			return closestHit;
+		}
+		else
+		{
+			return new RaycastHit2D();
 		}
 	}
 }
