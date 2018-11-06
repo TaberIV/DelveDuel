@@ -481,6 +481,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 5
+  MoveForce: 30
+  Friction: 20
   NumRays: 3
   RayMargin: 0.001
 --- !u!61 &561490490
