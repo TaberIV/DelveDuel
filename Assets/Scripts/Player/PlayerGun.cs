@@ -8,7 +8,7 @@ public class PlayerGun : MonoBehaviour
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public float Radius = 0.5f;
-	public float MouseMin = 0.5f;
+	public float MouseMin = 100f;
 
 	// Components
 	private Transform trans;
