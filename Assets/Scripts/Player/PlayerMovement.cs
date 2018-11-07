@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         Accelerate(targetVelocity);
 
         Vector2 movement = velocity * Time.deltaTime;
-        RaycastHit2D hitInfo = controller.Move(movement);
+        controller.Move(movement);
     }
 
     private Vector2 GetTargetVelocity()
