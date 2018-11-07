@@ -9,6 +9,9 @@ public class BulletMovement : MonoBehaviour
     public float MoveSpeed = 5f;
     public float LiveTime = 2f;
 
+    //
+    public Transform Owner;
+
     // Components
     private Transform trans;
     private CharacterController2D controller;

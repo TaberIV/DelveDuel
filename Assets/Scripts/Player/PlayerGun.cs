@@ -5,16 +5,20 @@ using UnityEngine;
 public class PlayerGun : MonoBehaviour
 {
 	// Inspector Settings
-	public GameObject bulletPrefab;
-	public Transform bulletSpawn;
 	public float Radius = 0.5f;
 	public float MouseMin = 100f;
+
+	public GameObject bulletPrefab;
+	public Transform bulletSpawn;
+
+	public float ShotTime = 0.5f;
 
 	// Components
 	private Transform trans;
 
 	// State
 	private Vector2 aim;
+	private float shotTimer;
 
 	void Awake()
 	{
@@ -24,6 +28,8 @@ public class PlayerGun : MonoBehaviour
 		// Initialize State
 		aim = Vector2.right;
 		Rotate();
+
+		shotTimer = 0;
 	}
 
 	void Update()
@@ -31,10 +37,13 @@ public class PlayerGun : MonoBehaviour
 		GetInput();
 		Rotate();
 
-		if (Input.GetButton("Fire"))
+		if (Input.GetButton("Fire") && shotTimer == ShotTime)
 		{
 			Fire();
+			shotTimer = 0;
 		}
+
+		shotTimer = Mathf.Min(shotTimer + Time.deltaTime, ShotTime);
 	}
 
 	private void GetInput()
@@ -76,5 +85,7 @@ public class PlayerGun : MonoBehaviour
 			bulletSpawn.position,
 			bulletSpawn.rotation
 		);
+
+		bullet.GetComponent<BulletMovement>().Owner = trans.parent;
 	}
 }
