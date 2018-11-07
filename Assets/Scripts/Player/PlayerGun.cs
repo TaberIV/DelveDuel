@@ -8,6 +8,7 @@ public class PlayerGun : MonoBehaviour
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public float Radius = 0.5f;
+	public float MouseMin = 0.5f;
 
 	// Components
 	private Transform trans;
@@ -55,9 +56,9 @@ public class PlayerGun : MonoBehaviour
 				Input.GetAxis("Mouse Y")
 			);
 
-			if (mouseInput.magnitude != 0)
+			if (mouseInput.magnitude > MouseMin)
 			{
-				// TODO Aim at mouse
+				aim = mouseInput.normalized;
 			}
 		}
 	}
