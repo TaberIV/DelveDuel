@@ -11,7 +11,7 @@ public class PlayerGun : MonoBehaviour
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 
-	public float ShotTime = 0.5f;
+	public float ShotTime = 0.15f;
 
 	// Components
 	private Transform trans;

@@ -139,10 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c69faa38a0894a4f9237d050a2c0e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Radius: 0.5
+  MouseMin: 100
   bulletPrefab: {fileID: 1437787152879586, guid: 0824173fe71de83498b12eae3cd42a45,
     type: 2}
   bulletSpawn: {fileID: 4464346332749430}
-  Radius: 0.5
+  ShotTime: 0.15
 --- !u!114 &114803859275898970
 MonoBehaviour:
   m_ObjectHideFlags: 1
