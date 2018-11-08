@@ -53,7 +53,7 @@ public class CharacterController2D : MonoBehaviour
 
 			// Raycasting
 			bool collided = false;
-			float raySpacing = col.bounds.size.y / (NumRaysX - 1);
+			float raySpacing = (col.bounds.size.y - 2 * RayMargin) / (NumRaysX - 1);
 			RaycastHit2D closestHit = new RaycastHit2D();
 			closestHit.distance = Mathf.Infinity;
 
@@ -102,14 +102,14 @@ public class CharacterController2D : MonoBehaviour
 
 			// Origin of first vector
 			Vector2 origin = new Vector2(
-				col.bounds.min.x,
+				col.bounds.min.x + RayMargin,
 				(dir > 0 ? col.bounds.max.y : col.bounds.min.y) +
 				dir * RayMargin
 			);
 
 			// Raycasting
 			bool collided = false;
-			float raySpacing = col.bounds.size.x / (NumRaysY - 1);
+			float raySpacing = (col.bounds.size.x - 2 * RayMargin) / (NumRaysY - 1);
 			RaycastHit2D closestHit = new RaycastHit2D();
 			closestHit.distance = Mathf.Infinity;
 
