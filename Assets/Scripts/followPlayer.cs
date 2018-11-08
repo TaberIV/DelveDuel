@@ -10,6 +10,7 @@ public class followPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //offset = transform.position - player.transform.position;
+        player = GameObject.Find("Player");
 	}
 	
 	// Update is called once per frame
