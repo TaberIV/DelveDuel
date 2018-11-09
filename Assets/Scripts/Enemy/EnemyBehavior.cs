@@ -10,18 +10,20 @@ public class EnemyBehavior : MonoBehaviour
 	public float DriftSpeed = 1;
 	public float BurstTimeMax = 3;
 	public float BurstTimeMin = 1;
+	public bool Recoil;
+	public float RecoilTime;
 
 	// Components
-	Transform trans;
-	CharacterController2D controller;
+	private Transform trans;
+	private CharacterController2D controller;
 
 	// Other objects
 	private Transform player;
 
 	// State
-	private Vector2 velocity;
 	private float burstTimer;
 	private bool burst;
+	private float recoilTimer;
 
 	void Awake()
 	{
@@ -30,8 +32,6 @@ public class EnemyBehavior : MonoBehaviour
 		controller = GetComponent<CharacterController2D>();
 
 		// Initialize State
-		velocity = new Vector2();
-
 		burst = Random.Range(0, 1) > 0.5;
 		burstTimer = Random.Range(BurstTimeMin, BurstTimeMax);
 	}
@@ -43,16 +43,14 @@ public class EnemyBehavior : MonoBehaviour
 
 	void Update()
 	{
-		if (burstTimer > 0)
-		{
-			Vector3 diff = (player.position - trans.position).normalized;
+		Vector3 dir = (player.position - trans.position).normalized;
+		float speed = burst ? BurstSpeed : DriftSpeed;
 
-			float speed = burst ? BurstSpeed : DriftSpeed;
-			controller.Move(diff * speed * Time.deltaTime);
+		controller.Move(dir * speed * Time.deltaTime);
 
-			burstTimer -= Time.deltaTime;
-		}
-		else
+		burstTimer -= Time.deltaTime;
+
+		if (burstTimer <= 0)
 		{
 			burstTimer = Random.Range(BurstTimeMin, BurstTimeMax);
 			burst = !burst;
