@@ -16,20 +16,19 @@ public class GoToNextLevel : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Next Lvl");
-        print("Next Level");
-
         if (col.tag == "Player")
         {
+            /*
             if (SceneManager.GetActiveScene().buildIndex == 0)
             {
                 SceneManager.LoadScene(0);
             }
+            */
             // Do the animation
             //transform.parent.GetComponent<Animator>().SetBool("open", true);
 
             // Go to the next level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

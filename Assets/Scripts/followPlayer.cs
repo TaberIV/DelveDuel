@@ -9,6 +9,7 @@ public class followPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        player = GameObject.Find("Player");
         //offset = transform.position - player.transform.position;
 	}
 	
