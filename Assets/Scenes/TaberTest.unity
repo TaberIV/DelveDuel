@@ -339,6 +339,8 @@ GameObject:
   - component: {fileID: 1252347377}
   - component: {fileID: 1252347376}
   - component: {fileID: 1252347378}
+  - component: {fileID: 1252347379}
+  - component: {fileID: 1252347380}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -417,6 +419,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 3
+--- !u!114 &1252347379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252347375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee66d5c9cdb6d849892ed886b2ef34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthMax: 100
+--- !u!61 &1252347380
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252347375}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0
 --- !u!1 &1761062093
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +497,23 @@ Transform:
   m_Father: {fileID: 918377233}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1855448437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1021918117100354, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863897387}
+--- !u!114 &1855448438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1855448437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fab123f7be9726429890639c6f731e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthMax: 100
 --- !u!1001 &1863897387
 Prefab:
   m_ObjectHideFlags: 0
@@ -577,6 +633,56 @@ Prefab:
         type: 2}
       propertyPath: Friction
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 61145537202653948, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 61145537202653948, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 212046803867951352, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 212046803867951352, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 212046803867951352, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212945262291121632, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 212945262291121632, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 212945262291121632, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61145537202653948, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 61145537202653948, guid: 0a0cce1929b4146d4bf2a0d18e9297d1,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a0cce1929b4146d4bf2a0d18e9297d1, type: 2}
