@@ -9,23 +9,15 @@ public class CharacterController2D : MonoBehaviour
 	public int NumRaysX = 3;
 	public int NumRaysY = 3;
 	public float RayMargin = 0.001f;
-	public string[] CollisionTags;
 
 	// Components
 	private Transform trans;
 	private Collider2D col;
 
-	private ArrayList collisionTags = new ArrayList();
-
 	void Awake()
 	{
 		trans = GetComponent<Transform>();
 		col = GetComponent<Collider2D>();
-
-		foreach (string tag in CollisionTags)
-		{
-			collisionTags.Add(tag);
-		}
 	}
 
 	public RaycastHit2D Move(Vector2 movement)
@@ -63,7 +55,7 @@ public class CharacterController2D : MonoBehaviour
 				Debug.DrawRay(origin, Vector2.right * dir, Color.red);
 				Debug.DrawRay(origin, Vector2.right * movement.x, Color.blue);
 
-				if (hitInfo.collider != null && collisionTags.Contains(hitInfo.collider.tag))
+				if (hitInfo.collider != null)
 				{
 					if (hitInfo.distance < closestHit.distance)
 					{
@@ -76,9 +68,14 @@ public class CharacterController2D : MonoBehaviour
 				origin += Vector2.up * raySpacing;
 			}
 
-			if (!collided) // No collisions, move normally
+			if (!collided || closestHit.collider.isTrigger) // No collisions, move normally
 			{
 				transform.position += Vector3.right * movement.x;
+
+				if (collided)
+				{
+					closestHit.collider.GetComponent<TriggerBehavior>().OnTriggerEnter2D(col);
+				}
 			}
 			else // Move as close to the wall as possible
 			{
@@ -119,7 +116,7 @@ public class CharacterController2D : MonoBehaviour
 				Debug.DrawRay(origin, Vector2.up * dir, Color.red);
 				Debug.DrawRay(origin, Vector2.up * movement.y, Color.blue);
 
-				if (hitInfo.collider != null && collisionTags.Contains(hitInfo.collider.tag))
+				if (hitInfo.collider != null)
 				{
 					if (hitInfo.distance < closestHit.distance)
 					{
@@ -132,9 +129,14 @@ public class CharacterController2D : MonoBehaviour
 				origin += Vector2.right * raySpacing;
 			}
 
-			if (!collided) // No collisions, move normally
+			if (!collided || closestHit.collider.isTrigger) // No collisions, move normally
 			{
 				transform.position += Vector3.up * movement.y;
+
+				if (collided)
+				{
+					closestHit.collider.GetComponent<TriggerBehavior>().OnTriggerEnter2D(col);
+				}
 			}
 			else // Move as close to the wall as possible
 			{
