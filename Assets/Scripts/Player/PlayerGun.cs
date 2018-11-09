@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerGun : MonoBehaviour
 {
 	// Inspector Settings
 	public float Radius = 0.5f;
 	public float MouseMin = 100f;
+	public Vector2 offset;
 
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
@@ -15,6 +17,7 @@ public class PlayerGun : MonoBehaviour
 
 	// Components
 	private Transform trans;
+	private SpriteRenderer sprite;
 
 	// State
 	private Vector2 aim;
@@ -24,6 +27,7 @@ public class PlayerGun : MonoBehaviour
 	{
 		// GetComponents
 		trans = GetComponent<Transform>();
+		sprite = GetComponent<SpriteRenderer>();
 
 		// Initialize State
 		aim = Vector2.right;
@@ -37,7 +41,7 @@ public class PlayerGun : MonoBehaviour
 		GetInput();
 		Rotate();
 
-		if (Input.GetButton("Fire") && shotTimer == ShotTime)
+		if ((Input.GetButton("Fire") || Input.GetAxis("Fire") > 0.2) && shotTimer == ShotTime)
 		{
 			Fire();
 			shotTimer = 0;
@@ -76,6 +80,10 @@ public class PlayerGun : MonoBehaviour
 	{
 		trans.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(aim.y, aim.x));
 		trans.localPosition = aim * Radius;
+		trans.localPosition += (Vector3) offset;
+
+		sprite.flipY = aim.x < 0;
+
 	}
 
 	private void Fire()
