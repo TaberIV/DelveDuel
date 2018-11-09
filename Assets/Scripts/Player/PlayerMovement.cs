@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
     // Inspector Settings
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Components
     private CharacterController2D controller;
+    private SpriteRenderer sprite;
 
     // State
     private Vector2 moveInput;
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // GetComponents
         controller = GetComponent<CharacterController2D>();
+        sprite = GetComponent<SpriteRenderer>();
 
         // Initialize State
         velocity = new Vector2(0, 0);
@@ -59,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movement = velocity * Time.deltaTime;
         controller.Move(movement);
+
+        if (movement.x != 0)
+        {
+            sprite.flipX = movement.x < 0;
+        }
     }
 
     private Vector2 GetTargetVelocity()
