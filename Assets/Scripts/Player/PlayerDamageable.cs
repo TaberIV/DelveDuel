@@ -22,7 +22,7 @@ public class PlayerDamageable : Damageable
 
     public override void Death()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(0);
     }
 
     public override void ReceiveDamage(float damage, GameObject damager = null)
