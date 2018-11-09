@@ -19,7 +19,7 @@ namespace Doors
             if (col.tag == "Player")
             {
                 // Go to the next level
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 perStats.ExitSide = GetComponent<DoorInfoContainer>().wall;
             }
         }
