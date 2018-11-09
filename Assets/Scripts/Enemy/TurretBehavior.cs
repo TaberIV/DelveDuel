@@ -16,7 +16,8 @@ public class TurretBehavior : BaddyBehavior
     private CharacterController2D controller;
 
     // Other objects
-    private Transform player;
+    private GameObject player;
+    private Transform playerTrans;
 
     // State
     float projectileTimer;
@@ -34,36 +35,51 @@ public class TurretBehavior : BaddyBehavior
 
     void Start()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player");
     }
 
     void Update()
     {
-        Vector3 dir = (player.position - trans.position).normalized;
-
-        if (projectileTimer <= 0)
+        if (playerTrans != null)
         {
-            GameObject projectile = Instantiate(
-                ProjectilePrefab,
-                trans.position + ((Vector3) dir),
-                Quaternion.Euler(
-                    0,
-                    0,
-                    Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x)
-                )
-            );
+            Vector3 dir = (playerTrans.position - trans.position).normalized;
 
-            projectile.GetComponent<BulletMovement>().Owner = gameObject;
-            projectileTimer = Random.Range(ProjectileTimeMin, ProjectileTimeMax);
+            if (projectileTimer <= 0)
+            {
+                GameObject projectile = Instantiate(
+                    ProjectilePrefab,
+                    trans.position + ((Vector3) dir),
+                    Quaternion.Euler(
+                        0,
+                        0,
+                        Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x)
+                    )
+                );
+
+                projectile.GetComponent<BulletMovement>().Owner = gameObject;
+                projectileTimer = Random.Range(ProjectileTimeMin, ProjectileTimeMax);
+            }
+
+            projectileTimer -= Time.deltaTime;
+
+            if (Recoil)
+            {
+                controller.Move(-dir * RecoilSpeed * Time.deltaTime);
+
+                recoilTimer -= Time.deltaTime;
+            }
         }
-
-        projectileTimer -= Time.deltaTime;
-
-        if (Recoil)
+        else
         {
-            controller.Move(-dir * RecoilSpeed * Time.deltaTime);
+            if (player == null)
+            {
+                player = GameObject.Find("Player");
+            }
 
-            recoilTimer -= Time.deltaTime;
+            if (player != null)
+            {
+                playerTrans = player.transform;
+            }
         }
     }
 }

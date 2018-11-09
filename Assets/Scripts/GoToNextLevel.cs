@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GoToNextLevel : TriggerBehavior
+namespace Doors
 {
-    public PersistentStats perStats;
-
-    private void Start()
+    public class GoToNextLevel : TriggerBehavior
     {
-        perStats = GameObject.Find("PersistentStats").GetComponent<PersistentStats>();
-    }
+        public PersistentStats perStats;
 
-    public override void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Player")
+        private void Start()
         {
-            // Go to the next level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            perStats = GameObject.Find("PersistentStats").GetComponent<PersistentStats>();
+        }
+
+        public override void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.tag == "Player")
+            {
+                // Go to the next level
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                perStats.ExitSide = GetComponent<DoorInfoContainer>().wall;
+            }
         }
     }
 }

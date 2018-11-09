@@ -16,7 +16,8 @@ public class EnemyBehavior : BaddyBehavior
 	private CharacterController2D controller;
 
 	// Other objects
-	private Transform player;
+	private GameObject player;
+	private Transform playerTrans;
 
 	// State
 	private float burstTimer;
@@ -36,40 +37,55 @@ public class EnemyBehavior : BaddyBehavior
 
 	void Start()
 	{
-		player = GameObject.Find("Player").transform;
+		player = GameObject.Find("Player");
 	}
 
 	void Update()
 	{
-		Vector3 dir = (player.position - trans.position).normalized;
-
-		if (!Recoil)
+		if (playerTrans != null)
 		{
-			float speed = burst ? BurstSpeed : DriftSpeed;
+			Vector3 dir = (playerTrans.position - trans.position).normalized;
 
-			RaycastHit2D hitInfo = controller.Move(dir * speed * Time.deltaTime);
-
-			if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "Player")
+			if (!Recoil)
 			{
-				hitInfo.collider.gameObject.GetComponent<Damageable>()
-					.ReceiveDamage(20, gameObject);
+				float speed = burst ? BurstSpeed : DriftSpeed;
 
-				GetComponent<Damageable>().ReceiveDamage(20, hitInfo.collider.gameObject);
+				RaycastHit2D hitInfo = controller.Move(dir * speed * Time.deltaTime);
+
+				if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "Player")
+				{
+					hitInfo.collider.gameObject.GetComponent<Damageable>()
+						.ReceiveDamage(20, gameObject);
+
+					GetComponent<Damageable>().ReceiveDamage(20, hitInfo.collider.gameObject);
+				}
+
+				burstTimer -= Time.deltaTime;
+
+				if (burstTimer <= 0)
+				{
+					burstTimer = Random.Range(BurstTimeMin, BurstTimeMax);
+					burst = !burst;
+				}
 			}
-
-			burstTimer -= Time.deltaTime;
-
-			if (burstTimer <= 0)
+			else
 			{
-				burstTimer = Random.Range(BurstTimeMin, BurstTimeMax);
-				burst = !burst;
+				controller.Move(-dir * BurstSpeed * Time.deltaTime);
+
+				recoilTimer -= Time.deltaTime;
 			}
 		}
 		else
 		{
-			controller.Move(-dir * BurstSpeed * Time.deltaTime);
+			if (player == null)
+			{
+				player = GameObject.Find("Player");
+			}
 
-			recoilTimer -= Time.deltaTime;
+			if (player != null)
+			{
+				playerTrans = player.transform;
+			}
 		}
 	}
 }
