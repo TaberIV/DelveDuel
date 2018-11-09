@@ -18,7 +18,7 @@ public class Damageable : MonoBehaviour
 		}
 	}
 
-	void Awake()
+	protected virtual void Awake()
 	{
 		health = HealthMax;
 	}

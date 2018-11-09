@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 10
   LiveTime: 1
+  Damage: 20
   Owner: {fileID: 0}
 --- !u!114 &114714610118942058
 MonoBehaviour:
@@ -136,9 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ddc0bc539924bb1b3ef1a371efb566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumRaysX: 3
-  NumRaysY: 3
+  NumRaysX: 2
+  NumRaysY: 2
   RayMargin: 0.001
-  CollisionTags:
-  - Wall
-  - Door

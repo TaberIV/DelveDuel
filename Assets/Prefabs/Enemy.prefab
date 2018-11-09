@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4444780933943370}
   - component: {fileID: 212219301362512744}
-  - component: {fileID: 114472689757808054}
-  - component: {fileID: 114281734243138688}
   - component: {fileID: 61397801375380208}
+  - component: {fileID: 114120451731900892}
+  - component: {fileID: 114071491855326744}
+  - component: {fileID: 114037647901612972}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1719708991807770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: 1.97, z: -0.0703125}
+  m_LocalPosition: {x: 3.7217305, y: -2.7278385, z: -0.0703125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,7 +69,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
---- !u!114 &114281734243138688
+--- !u!114 &114037647901612972
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,11 +77,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1719708991807770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ee66d5c9cdb6d849892ed886b2ef34c, type: 3}
+  m_Script: {fileID: 11500000, guid: da3e90c489f073f428c3c2780824a5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HealthMax: 100
---- !u!114 &114472689757808054
+--- !u!114 &114071491855326744
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +92,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f688172f4a21442bb9e47eeb639b440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  BurstSpeed: 3
+  DriftSpeed: 1
+  BurstTimeMax: 3
+  BurstTimeMin: 1
+  RecoilTime: 0.2
+--- !u!114 &114120451731900892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1719708991807770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ddc0bc539924bb1b3ef1a371efb566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NumRaysX: 3
+  NumRaysY: 3
+  RayMargin: 0.001
 --- !u!212 &212219301362512744
 SpriteRenderer:
   m_ObjectHideFlags: 1
