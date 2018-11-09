@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GoToNextLevel : MonoBehaviour
+public class GoToNextLevel : TriggerBehavior
 {
     public PersistentStats perStats;
 
@@ -12,7 +12,7 @@ public class GoToNextLevel : MonoBehaviour
         perStats = GameObject.Find("PersistentStats").GetComponent<PersistentStats>();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    public override void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player")
         {
@@ -20,5 +20,4 @@ public class GoToNextLevel : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
-
 }

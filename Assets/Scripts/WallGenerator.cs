@@ -86,7 +86,7 @@ public class WallGenerator : MonoBehaviour
 					(RoomDimensions.y / 2 - WallWidth) * doorInfo.position
 				);
 
-				door.transform.localScale = new Vector2(WallWidth, 1);
+				door.transform.localScale = new Vector2(WallWidth * 1.5f, 1);
 			}
 		}
 	}
