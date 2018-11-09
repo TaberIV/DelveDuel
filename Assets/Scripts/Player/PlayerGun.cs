@@ -10,8 +10,8 @@ public class PlayerGun : MonoBehaviour
 	public float MouseMin = 100f;
 	public Vector2 offset;
 
-	public GameObject bulletPrefab;
-	public Transform bulletSpawn;
+	public GameObject BulletPrefab;
+	public Transform BulletSpawn;
 
 	public float ShotTime = 0.15f;
 
@@ -61,7 +61,6 @@ public class PlayerGun : MonoBehaviour
 		{
 			aim = aimInput.normalized;
 		}
-		// Intended for aiming at mouse
 		else
 		{
 			Vector2 mouseInput = new Vector2(
@@ -89,9 +88,9 @@ public class PlayerGun : MonoBehaviour
 	private void Fire()
 	{
 		GameObject bullet = Instantiate(
-			bulletPrefab,
-			bulletSpawn.position,
-			bulletSpawn.rotation
+			BulletPrefab,
+			BulletSpawn.position,
+			BulletSpawn.rotation
 		);
 
 		bullet.GetComponent<BulletMovement>().Owner = trans.parent.gameObject;

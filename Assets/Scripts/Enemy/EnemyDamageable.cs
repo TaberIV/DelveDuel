@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyBehavior))]
+[RequireComponent(typeof(BaddyBehavior))]
 public class EnemyDamageable : Damageable
 {
 	// Components
-	private EnemyBehavior behavior;
+	private BaddyBehavior behavior;
 
 	protected override void Awake()
 	{
 		base.Awake();
 
-		behavior = GetComponent<EnemyBehavior>();
+		behavior = GetComponent<BaddyBehavior>();
 	}
 
 	public override void ReceiveDamage(float damage, GameObject damager = null)
 	{
-		if (!behavior.Recoil)
+		if (!behavior.Recoil && damager.name == "Player")
 		{
 			base.ReceiveDamage(damage, damager);
 			behavior.Recoil = true;
