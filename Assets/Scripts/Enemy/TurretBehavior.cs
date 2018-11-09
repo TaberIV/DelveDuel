@@ -41,27 +41,25 @@ public class TurretBehavior : BaddyBehavior
     {
         Vector3 dir = (player.position - trans.position).normalized;
 
-        if (!Recoil)
+        if (projectileTimer <= 0)
         {
-            if (projectileTimer <= 0)
-            {
-                GameObject projectile = Instantiate(
-                    ProjectilePrefab,
-                    trans.position + ((Vector3) dir),
-                    Quaternion.Euler(
-                        0,
-                        0,
-                        Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x)
-                    )
-                );
+            GameObject projectile = Instantiate(
+                ProjectilePrefab,
+                trans.position + ((Vector3) dir),
+                Quaternion.Euler(
+                    0,
+                    0,
+                    Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x)
+                )
+            );
 
-                projectile.GetComponent<BulletMovement>().Owner = gameObject;
-                projectileTimer = Random.Range(ProjectileTimeMin, ProjectileTimeMax);
-            }
-
-            projectileTimer -= Time.deltaTime;
+            projectile.GetComponent<BulletMovement>().Owner = gameObject;
+            projectileTimer = Random.Range(ProjectileTimeMin, ProjectileTimeMax);
         }
-        else
+
+        projectileTimer -= Time.deltaTime;
+
+        if (Recoil)
         {
             controller.Move(-dir * RecoilSpeed * Time.deltaTime);
 

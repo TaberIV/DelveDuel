@@ -47,7 +47,15 @@ public class EnemyBehavior : BaddyBehavior
 		{
 			float speed = burst ? BurstSpeed : DriftSpeed;
 
-			controller.Move(dir * speed * Time.deltaTime);
+			RaycastHit2D hitInfo = controller.Move(dir * speed * Time.deltaTime);
+
+			if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "Player")
+			{
+				hitInfo.collider.gameObject.GetComponent<Damageable>()
+					.ReceiveDamage(20, gameObject);
+
+				GetComponent<Damageable>().ReceiveDamage(20, hitInfo.collider.gameObject);
+			}
 
 			burstTimer -= Time.deltaTime;
 
