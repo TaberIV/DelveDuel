@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GoToNextLevel : MonoBehaviour {
-
-    public GameObject player;
+public class GoToNextLevel : MonoBehaviour
+{
     public PersistentStats perStats;
 
     private void Start()
     {
-        player = GameObject.Find("Player");
         perStats = GameObject.Find("PersistentStats").GetComponent<PersistentStats>();
     }
 
@@ -18,15 +16,6 @@ public class GoToNextLevel : MonoBehaviour {
     {
         if (col.tag == "Player")
         {
-            /*
-            if (SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                SceneManager.LoadScene(0);
-            }
-            */
-            // Do the animation
-            //transform.parent.GetComponent<Animator>().SetBool("open", true);
-
             // Go to the next level
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
