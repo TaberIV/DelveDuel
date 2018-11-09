@@ -38,7 +38,11 @@ namespace Doors
         void OnEnable()
         {
             //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
-            // SceneManager.sceneLoaded += OnLevelFinishedLoading;
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
+
+        void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
             GameObject player = Instantiate(PlayerPrefab);
             player.name = "Player";
         }

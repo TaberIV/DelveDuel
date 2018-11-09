@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthMax: 60
+  oneSlime: {fileID: 21300000, guid: b7f6175dedae543beafec3d77beb90cb, type: 3}
+  twoSlime: {fileID: 21300000, guid: 88b462b5436204f998508b8c29542f24, type: 3}
 --- !u!114 &114429804169189622
 MonoBehaviour:
   m_ObjectHideFlags: 1
