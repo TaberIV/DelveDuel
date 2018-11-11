@@ -5,14 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CharacterController2D : MonoBehaviour
 {
-	// Collision Settings
+	// Inspector Settings
 	public int NumRaysX = 3;
 	public int NumRaysY = 3;
 	public float RayMargin = 0.001f;
+	public ContactFilter2D filter2D;
 
 	// Components
 	private Transform trans;
 	private Collider2D col;
+
+	private int MaxCollisions = 100;
 
 	void Awake()
 	{
@@ -20,135 +23,108 @@ public class CharacterController2D : MonoBehaviour
 		col = GetComponent<Collider2D>();
 	}
 
-	public RaycastHit2D Move(Vector2 movement)
+	public RaycastHit2D[, ] Move(Vector2 movement)
 	{
-		RaycastHit2D hit1 = HorizontalMovement(movement);
-		RaycastHit2D hit2 = VerticalMovement(movement);
+		RaycastHit2D[, ] collisionInfo = Movement(movement);
 
-		return hit1.collider == null || hit2.distance < hit1.distance ?
-			hit2 :
-			hit1;
+		return collisionInfo;
 	}
 
-	private RaycastHit2D HorizontalMovement(Vector2 movement)
+	private RaycastHit2D[, ] Movement(Vector2 movement)
 	{
-		if (movement.x != 0)
+
+		RaycastHit2D[, ] collisionInfo = new RaycastHit2D[2, MaxCollisions];
+
+		for (int axis = 0; axis < 2; axis++)
 		{
-			float dir = Mathf.Sign(movement.x);
+			float move = axis == 0 ? movement.x : movement.y;
 
-			// Origin of first vector
-			Vector2 origin = new Vector2(
-				(dir > 0 ? col.bounds.max.x : col.bounds.min.x) +
-				dir * RayMargin,
-				col.bounds.min.y
-			);
+			Vector2 moveAxis = axis == 0 ? Vector2.right : Vector2.up;
+			Vector2 crossAxis = axis == 0 ? Vector2.up : Vector2.right;
 
-			// Raycasting
-			bool collided = false;
-			float raySpacing = (col.bounds.size.y - 2 * RayMargin) / (NumRaysX - 1);
-			RaycastHit2D closestHit = new RaycastHit2D();
-			closestHit.distance = Mathf.Infinity;
+			RaycastHit2D[] axisCollisionInfo = new RaycastHit2D[MaxCollisions];
 
-			for (int i = 0; i < NumRaysX; i++)
+			if (move != 0)
 			{
-				RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.right * dir, Mathf.Abs(movement.x));
-				Debug.DrawRay(origin, Vector2.right * dir, Color.red);
-				Debug.DrawRay(origin, Vector2.right * movement.x, Color.blue);
+				float dir = Mathf.Sign(move);
 
-				if (hitInfo.collider != null)
+				// Origin of first vector
+				Vector2 origin = axis == 0 ?
+					new Vector2(
+						(dir > 0 ? col.bounds.max.x : col.bounds.min.x) +
+						dir * RayMargin,
+						col.bounds.min.y
+					) :
+					new Vector2(
+						col.bounds.min.x + RayMargin,
+						(dir > 0 ? col.bounds.max.y : col.bounds.min.y) +
+						dir * RayMargin
+					);
+
+				// Raycasting
+				bool collided = false;
+				float raySpacing = axis == 0 ?
+					(col.bounds.size.y - 2 * RayMargin) / (NumRaysX - 1) :
+					(col.bounds.size.x - 2 * RayMargin) / (NumRaysY - 1);
+				RaycastHit2D closestHit = new RaycastHit2D();
+				closestHit.distance = Mathf.Infinity;
+
+				for (int ray = 0; ray < NumRaysX; ray++)
 				{
-					if (hitInfo.distance < closestHit.distance)
+					int numCollisions = Physics2D.Raycast(origin, moveAxis * dir, filter2D, axisCollisionInfo, Mathf.Abs(move));
+
+					Debug.DrawRay(origin, moveAxis * dir, Color.red);
+					Debug.DrawRay(origin, moveAxis * move, Color.blue);
+
+					for (int collision = 0; collision < numCollisions; collision++)
 					{
-						closestHit = hitInfo;
+						RaycastHit2D hitInfo = axisCollisionInfo[collision];
+
+						if (hitInfo.collider != null)
+						{
+							if (hitInfo.collider.isTrigger)
+							{
+								hitInfo.collider.GetComponent<TriggerBehavior>().OnTriggerEnter2D(col);
+							}
+							else
+							{
+								if (hitInfo.distance < closestHit.distance)
+								{
+									closestHit = hitInfo;
+								}
+
+								collided = true;
+							}
+						}
+
+						collisionInfo[axis, collision] = axisCollisionInfo[collision];
 					}
 
-					collided = true;
+					origin += crossAxis * raySpacing;
 				}
 
-				origin += Vector2.up * raySpacing;
-			}
-
-			if (!collided || closestHit.collider.isTrigger) // No collisions, move normally
-			{
-				transform.position += Vector3.right * movement.x;
-
-				if (collided)
+				if (!collided) // No collisions, move normally
 				{
-					closestHit.collider.GetComponent<TriggerBehavior>().OnTriggerEnter2D(col);
+					transform.position += (Vector3) moveAxis * move;
 				}
-			}
-			else // Move as close to the wall as possible
-			{
-				float newX = closestHit.point.x - dir * (col.bounds.extents.x + RayMargin);
-				trans.position = new Vector3(newX, trans.position.y);
-			}
-
-			return closestHit;
-		}
-		else
-		{
-			return new RaycastHit2D();
-		}
-	}
-
-	private RaycastHit2D VerticalMovement(Vector2 movement)
-	{
-		if (movement.y != 0)
-		{
-			float dir = Mathf.Sign(movement.y);
-
-			// Origin of first vector
-			Vector2 origin = new Vector2(
-				col.bounds.min.x + RayMargin,
-				(dir > 0 ? col.bounds.max.y : col.bounds.min.y) +
-				dir * RayMargin
-			);
-
-			// Raycasting
-			bool collided = false;
-			float raySpacing = (col.bounds.size.x - 2 * RayMargin) / (NumRaysY - 1);
-			RaycastHit2D closestHit = new RaycastHit2D();
-			closestHit.distance = Mathf.Infinity;
-
-			for (int i = 0; i < NumRaysY; i++)
-			{
-				RaycastHit2D hitInfo = Physics2D.Raycast(origin, Vector2.up * dir, Mathf.Abs(movement.y));
-				Debug.DrawRay(origin, Vector2.up * dir, Color.red);
-				Debug.DrawRay(origin, Vector2.up * movement.y, Color.blue);
-
-				if (hitInfo.collider != null)
+				else // Move as close to the wall as possible
 				{
-					if (hitInfo.distance < closestHit.distance)
-					{
-						closestHit = hitInfo;
-					}
+					// TODO: adjust for irregular col.bounds.center
 
-					collided = true;
-				}
+					float collisionExtent = axis == 0 ?
+						col.bounds.extents.x :
+						col.bounds.extents.y;
 
-				origin += Vector2.right * raySpacing;
-			}
+					float closestPoint = axis == 0 ?
+						closestHit.point.x :
+						closestHit.point.y;
 
-			if (!collided || closestHit.collider.isTrigger) // No collisions, move normally
-			{
-				transform.position += Vector3.up * movement.y;
-
-				if (collided)
-				{
-					closestHit.collider.GetComponent<TriggerBehavior>().OnTriggerEnter2D(col);
+					float moved = closestPoint - dir * (collisionExtent + RayMargin);
+					trans.position = axis == 0 ? new Vector3(moved, trans.position.y) : new Vector3(trans.position.x, moved);
 				}
 			}
-			else // Move as close to the wall as possible
-			{
-				float newY = closestHit.point.y - dir * (col.bounds.extents.y + RayMargin);
-				trans.position = new Vector3(trans.position.x, newY);
-			}
+		}
 
-			return closestHit;
-		}
-		else
-		{
-			return new RaycastHit2D();
-		}
+		return collisionInfo;
 	}
 }
