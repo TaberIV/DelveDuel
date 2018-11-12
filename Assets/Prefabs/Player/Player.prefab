@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fab123f7be9726429890639c6f731e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthMax: 60
+  HealthMax: 20000
   oneSlime: {fileID: 21300000, guid: b7f6175dedae543beafec3d77beb90cb, type: 3}
   twoSlime: {fileID: 21300000, guid: 88b462b5436204f998508b8c29542f24, type: 3}
   threeSlime: {fileID: 21300000, guid: 5927a3797cabb49a4829006b7943aa05, type: 3}
@@ -176,6 +176,20 @@ MonoBehaviour:
   NumRaysX: 3
   NumRaysY: 3
   RayMargin: 0.001
+  filter2D:
+    useTriggers: 1
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!114 &114858398133003404
 MonoBehaviour:
   m_ObjectHideFlags: 1
