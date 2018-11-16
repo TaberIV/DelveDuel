@@ -93,6 +93,6 @@ public class PlayerGun : MonoBehaviour
 			BulletSpawn.rotation
 		);
 
-		bullet.GetComponent<BulletMovement>().Owner = trans.parent.gameObject;
+		bullet.GetComponent<Damager>().Owner = trans.parent.gameObject;
 	}
 }

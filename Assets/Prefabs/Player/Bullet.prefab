@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61098273271495306}
   - component: {fileID: 114714610118942058}
   - component: {fileID: 114404957789269836}
+  - component: {fileID: 114511440320677858}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -124,6 +125,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 10
   LiveTime: 1
+--- !u!114 &114511440320677858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1437787152879586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b197cf477f5c46f1b8bfd5b04b093ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Damage: 20
   Owner: {fileID: 0}
 --- !u!114 &114714610118942058
@@ -140,3 +152,17 @@ MonoBehaviour:
   NumRaysX: 2
   NumRaysY: 2
   RayMargin: 0.001
+  filter2D:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0

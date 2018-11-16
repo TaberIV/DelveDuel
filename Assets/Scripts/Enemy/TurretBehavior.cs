@@ -55,8 +55,8 @@ public class TurretBehavior : BaddyBehavior
                         Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x)
                     )
                 );
+                projectile.GetComponent<Damager>().Owner = gameObject;
 
-                projectile.GetComponent<BulletMovement>().Owner = gameObject;
                 projectileTimer = Random.Range(ProjectileTimeMin, ProjectileTimeMax);
             }
 
